@@ -80,6 +80,10 @@ export function HistoryPage() {
       await qc.invalidateQueries({ queryKey: ['estimates', user?.id] })
     },
   })
+  const noteError =
+    noteMutation.isError && noteMutation.error instanceof Error
+      ? noteMutation.error.message
+      : null
 
   function downloadCsv() {
     const rows = data ?? []
@@ -208,6 +212,9 @@ export function HistoryPage() {
                       >
                         {noteMutation.isPending ? 'Saving…' : 'Save note'}
                       </Button>
+                      {noteError ? (
+                        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{noteError}</p>
+                      ) : null}
                     </div>
 
                     <div className="flex flex-wrap gap-2">
