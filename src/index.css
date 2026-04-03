@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-50: #faf5ff;
+  --color-brand-100: #f3e8ff;
+  --color-brand-400: #c084fc;
+  --color-brand-500: #9333ea;
+  --color-brand-600: #7c3aed;
+  --color-brand-700: #6d28d9;
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #4c1d95;
+  --color-brand-950: #2e1065;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --font-sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  background-color: #fafafa;
+  color: #18181b;
+}
+
+html.dark body {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+/* Light-surface inputs in dark mode: avoid inherited light text on white fields */
+html.dark
+  input:where(
+    :not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='range']):not(
+        [type='file']
+      ):not([type='image']):not([type='button']):not([type='submit']):not([type='reset'])
+  ),
+html.dark textarea,
+html.dark select {
+  background-color: #ffffff;
+  color: #18181b;
+  border-color: #a1a1aa;
+  caret-color: #18181b;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #71717a;
+  opacity: 1;
+}
+
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #18181b !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+}
+
+/* Motion primitives (used by landing + dashboard) */
+@keyframes tc-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tc-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes tc-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes tc-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tc-animate-fade-up {
+  opacity: 0;
+  animation: tc-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.tc-animate-fade-in {
+  opacity: 0;
+  animation: tc-fade-in 0.6s ease-out forwards;
+}
+
+.tc-animate-scale-in {
+  opacity: 0;
+  animation: tc-scale-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.tc-float-soft {
+  animation: tc-float 6s ease-in-out infinite;
+}
+
+.tc-delay-1 {
+  animation-delay: 0.08s;
+}
+.tc-delay-2 {
+  animation-delay: 0.16s;
+}
+.tc-delay-3 {
+  animation-delay: 0.24s;
+}
+.tc-delay-4 {
+  animation-delay: 0.32s;
+}
+.tc-delay-5 {
+  animation-delay: 0.4s;
+}
+
+.tc-shimmer-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.tc-shimmer-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: tc-shimmer 1.8s ease-in-out infinite;
+}
+
+html.dark .tc-shimmer-bg::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-animate-fade-up,
+  .tc-animate-fade-in,
+  .tc-animate-scale-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .tc-float-soft {
+    animation: none;
+  }
+  .tc-shimmer-bg::after {
+    animation: none;
+  }
+}
