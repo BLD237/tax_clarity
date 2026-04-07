@@ -16,7 +16,7 @@ export async function fetchTaxIdByCode(code) {
 }
 
 /**
- * Persist estimate. Adjust columns to match your `tax_estimates` table.
+ * Persist estimate. 
  * @param {string} userId
  * @param {string | null} taxId
  * @param {{ gross: number, irpp: number, cnps: number, net: number, note?: string }} breakdown
