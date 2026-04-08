@@ -5,6 +5,8 @@ import { Button } from '../../components/ui/Button.jsx'
 import { Alert } from '../../components/ui/Alert.jsx'
 import { getSupabase, isSupabaseConfigured } from '../../lib/supabase/client.js'
 
+const EMAIL_REDIRECT_TO = 'https://tax-clarity.vercel.app/auth'
+
 const signInSchema = z.object({
   email: z.email(),
   password: z.string().min(8, 'Use at least 8 characters'),
@@ -56,6 +58,7 @@ export function AuthPage() {
           email: parsed.data.email,
           password: parsed.data.password,
           options: {
+            emailRedirectTo: EMAIL_REDIRECT_TO,
             data: {
               full_name: parsed.data.fullName,
             },
